@@ -58,7 +58,7 @@ export default function Teachers() {
 
   return (
     <div className="max-w-6xl">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold">Teachers</h1>
           <p className="text-slate-500 text-sm">{teachers.length} total records</p>
@@ -75,38 +75,42 @@ export default function Teachers() {
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search teachers..." className="w-full pl-9 pr-3 py-2 border rounded-lg text-sm" />
           </div>
         </div>
-        <table className="w-full text-sm text-left">
-          <thead className="bg-slate-50 text-slate-500">
-            <tr>
-              <th className="p-4">Teacher ID</th>
-              <th className="p-4">Name</th>
-              <th className="p-4">Subject</th>
-              <th className="p-4">Phone</th>
-              <th className="p-4 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {loading && <tr><td colSpan={5} className="p-4 text-center">Loading...</td></tr>}
-            {!loading && filtered.length === 0 && <tr><td colSpan={5} className="p-4 text-center text-slate-500">No teachers found.</td></tr>}
-            {filtered.map((t) => (
-              <tr key={t.id} className="hover:bg-slate-50">
-                <td className="p-4 font-mono text-xs">{t.teacher_id}</td>
-                <td className="p-4 font-medium">{t.full_name}</td>
-                <td className="p-4">{t.subject}</td>
-                <td className="p-4">{t.phone}</td>
-                <td className="p-4 text-right flex justify-end gap-2">
-                  <button onClick={() => openEdit(t)} className="text-indigo-600 hover:bg-indigo-50 p-2 rounded-lg"><Pencil size={16}/></button>
-                  <button onClick={() => handleDelete(t.id)} className="text-red-600 hover:bg-red-50 p-2 rounded-lg"><Trash2 size={16}/></button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px] text-left text-sm">
+            <thead className="bg-slate-50 text-slate-500">
+              <tr>
+                <th className="p-4">Teacher ID</th>
+                <th className="p-4">Name</th>
+                <th className="p-4">Subject</th>
+                <th className="p-4">Phone</th>
+                <th className="p-4 text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {loading && <tr><td colSpan={5} className="p-4 text-center">Loading...</td></tr>}
+              {!loading && filtered.length === 0 && <tr><td colSpan={5} className="p-4 text-center text-slate-500">No teachers found.</td></tr>}
+              {filtered.map((t) => (
+                <tr key={t.id} className="hover:bg-slate-50">
+                  <td className="p-4 font-mono text-xs">{t.teacher_id}</td>
+                  <td className="p-4 font-medium">{t.full_name}</td>
+                  <td className="p-4">{t.subject}</td>
+                  <td className="p-4">{t.phone}</td>
+                  <td className="p-4 text-right">
+                    <div className="flex justify-end gap-2">
+                      <button onClick={() => openEdit(t)} className="rounded-lg p-2 text-indigo-600 hover:bg-indigo-50"><Pencil size={16}/></button>
+                      <button onClick={() => handleDelete(t.id)} className="rounded-lg p-2 text-red-600 hover:bg-red-50"><Trash2 size={16}/></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {formOpen && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+          <form onSubmit={handleSubmit} className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-xl bg-white p-4 shadow-xl sm:p-6">
             <h2 className="text-lg font-bold mb-4">{editing ? "Edit Teacher" : "Add Teacher"}</h2>
             <div className="grid gap-3">
               <input required value={form.teacher_id} onChange={e => setForm({...form, teacher_id: e.target.value})} placeholder="Teacher ID" className="input" disabled={!!editing} />
@@ -118,7 +122,7 @@ export default function Teachers() {
               <input required value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder="Phone" className="input" />
               <input required value={form.subject} onChange={e => setForm({...form, subject: e.target.value})} placeholder="Subject (e.g. Math)" className="input" />
             </div>
-            <div className="flex justify-end gap-2 mt-6">
+            <div className="mt-6 flex flex-col-reverse justify-end gap-2 sm:flex-row">
               <button type="button" onClick={() => setFormOpen(false)} className="px-4 py-2 bg-slate-100 rounded-lg">Cancel</button>
               <button type="submit" disabled={submitting} className="px-4 py-2 bg-indigo-600 text-white rounded-lg">{submitting ? "Saving..." : "Save"}</button>
             </div>

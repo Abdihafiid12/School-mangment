@@ -17,10 +17,10 @@ export function ToastProvider({ children }) {
   return (
     <ToastCtx.Provider value={{ push }}>
       {children}
-      <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
+      <div className="fixed left-4 right-4 top-4 z-50 flex flex-col gap-2 sm:left-auto">
         {toasts.map((t) => (
           <div key={t.id}
-            className={`flex items-center gap-3 rounded-lg px-4 py-3 shadow-lg text-white min-w-[260px] ${
+            className={`flex min-w-0 items-center gap-3 rounded-lg px-4 py-3 text-white shadow-lg sm:min-w-[260px] ${
               t.type === "error" ? "bg-red-600" : "bg-emerald-600"
             }`}>
             {t.type === "error" ? <XCircle size={18} /> : <CheckCircle2 size={18} />}

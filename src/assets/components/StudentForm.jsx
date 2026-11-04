@@ -101,7 +101,7 @@ export default function StudentForm({ open, initial, onCancel, onSubmit, submitt
           </label>
         </div>
 
-        <div className="flex justify-end gap-2 mt-6">
+        <div className="mt-6 flex flex-col-reverse justify-end gap-2 sm:flex-row">
           <button type="button" onClick={onCancel} disabled={submitting} className="px-4 py-2 rounded-lg text-sm bg-slate-100 hover:bg-slate-200">Cancel</button>
           <button type="submit" disabled={submitting || uploading} className="px-4 py-2 rounded-lg text-sm bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-60">
             {submitting ? "Saving…" : initial ? "Update" : "Save"}

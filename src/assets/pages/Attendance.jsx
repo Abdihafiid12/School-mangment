@@ -47,7 +47,7 @@ export default function Attendance() {
 
   return (
     <div className="max-w-6xl">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold">Attendance</h1>
           <p className="text-slate-500 text-sm">Mark daily student attendance</p>
@@ -57,44 +57,48 @@ export default function Attendance() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-slate-50 text-slate-500">
-            <tr>
-              <th className="p-4">Student ID</th>
-              <th className="p-4">Name</th>
-              <th className="p-4">Status</th>
-              <th className="p-4 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {loading && <tr><td colSpan={4} className="p-4 text-center">Loading...</td></tr>}
-            {students.map((s) => {
-              const record = attendance.find(a => a.student_id === s.id);
-              return (
-                <tr key={s.id} className="hover:bg-slate-50">
-                  <td className="p-4 font-mono text-xs">{s.student_id}</td>
-                  <td className="p-4 font-medium">{s.full_name}</td>
-                  <td className="p-4">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      record?.status === 'Present' ? 'bg-green-100 text-green-700' : 
-                      record?.status === 'Absent' ? 'bg-red-100 text-red-700' : 
-                      record?.status === 'Late' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-slate-100 text-slate-500'
-                    }`}>
-                      {record?.status || 'Not Marked'}
-                    </span>
-                  </td>
-                  <td className="p-4 text-right flex justify-end gap-2">
-                    <button onClick={() => markAttendance(s.id, 'Present')} className={`px-3 py-1 rounded-lg text-xs font-medium ${record?.status === 'Present' ? 'bg-green-600 text-white' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}>Present</button>
-                    <button onClick={() => markAttendance(s.id, 'Absent')} className={`px-3 py-1 rounded-lg text-xs font-medium ${record?.status === 'Absent' ? 'bg-red-600 text-white' : 'bg-red-50 text-red-700 hover:bg-red-100'}`}>Absent</button>
-                    <button onClick={() => markAttendance(s.id, 'Late')} className={`px-3 py-1 rounded-lg text-xs font-medium ${record?.status === 'Late' ? 'bg-yellow-600 text-white' : 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100'}`}>Late</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="overflow-hidden rounded-xl bg-white shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px] text-left text-sm">
+            <thead className="bg-slate-50 text-slate-500">
+              <tr>
+                <th className="p-4">Student ID</th>
+                <th className="p-4">Name</th>
+                <th className="p-4">Status</th>
+                <th className="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {loading && <tr><td colSpan={4} className="p-4 text-center">Loading...</td></tr>}
+              {students.map((s) => {
+                const record = attendance.find(a => a.student_id === s.id);
+                return (
+                  <tr key={s.id} className="hover:bg-slate-50">
+                    <td className="p-4 font-mono text-xs">{s.student_id}</td>
+                    <td className="p-4 font-medium">{s.full_name}</td>
+                    <td className="p-4">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        record?.status === 'Present' ? 'bg-green-100 text-green-700' :
+                        record?.status === 'Absent' ? 'bg-red-100 text-red-700' :
+                        record?.status === 'Late' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-slate-100 text-slate-500'
+                      }`}>
+                        {record?.status || 'Not Marked'}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex justify-end gap-2">
+                        <button onClick={() => markAttendance(s.id, 'Present')} className={`px-3 py-1 rounded-lg text-xs font-medium ${record?.status === 'Present' ? 'bg-green-600 text-white' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}>Present</button>
+                        <button onClick={() => markAttendance(s.id, 'Absent')} className={`px-3 py-1 rounded-lg text-xs font-medium ${record?.status === 'Absent' ? 'bg-red-600 text-white' : 'bg-red-50 text-red-700 hover:bg-red-100'}`}>Absent</button>
+                        <button onClick={() => markAttendance(s.id, 'Late')} className={`px-3 py-1 rounded-lg text-xs font-medium ${record?.status === 'Late' ? 'bg-yellow-600 text-white' : 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100'}`}>Late</button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
