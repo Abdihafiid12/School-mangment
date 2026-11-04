@@ -120,7 +120,16 @@ export default function Students() {
               {!loading && filtered.map((s) => (
                 <tr key={s.id} className="hover:bg-slate-50">
                   <td className="px-4 py-3 font-mono text-xs">{s.student_id}</td>
-                  <td className="px-4 py-3 font-medium">{s.full_name}</td>
+                 <td className="px-4 py-3 font-medium flex items-center gap-3">
+  {s.avatar_url ? (
+    <img src={s.avatar_url} alt={s.full_name} className="w-8 h-8 rounded-full object-cover" />
+  ) : (
+    <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold">
+      {s.full_name.charAt(0)}
+    </div>
+  )}
+  {s.full_name}
+</td>
                   <td className="px-4 py-3">
                     <span className={`px-2 py-0.5 rounded-full text-xs ${
                       s.gender === "Male" ? "bg-blue-100 text-blue-700" : "bg-pink-100 text-pink-700"
