@@ -10,7 +10,7 @@ export default function Sidebar() {
     <aside className="w-64 bg-slate-900 text-slate-100 flex flex-col p-4 min-h-screen">
       <div className="flex items-center gap-2 px-2 py-4 mb-4">
         <GraduationCap className="text-indigo-400" />
-        <span className="font-bold text-lg">SMS Admin</span>
+        <span className="font-bold text-lg">syl Admin</span>
       </div>
       <nav className="flex-1 flex flex-col gap-1">
         <NavLink to="/" end
